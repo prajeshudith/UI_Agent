@@ -4,3 +4,5 @@ langchain
 langchain_community
 playwright
 beautifulsoup4
+SpeechRecognition
+pyaudio
