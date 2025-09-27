@@ -1,0 +1,6 @@
+langchain-google-genai
+python-dotenv
+langchain
+langchain_community
+playwright
+beautifulsoup4
