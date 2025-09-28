@@ -6,3 +6,7 @@ playwright
 beautifulsoup4
 SpeechRecognition
 pyaudio
+pandas
+selenium
+webdriver-manager
+pydantic
