@@ -250,25 +250,40 @@ async def main():
     )
 
     try:
-        result = await run_agent_task(agent_executor, """Navigate to https://www.saucedemo.com/. 
+        result = await run_agent_task(agent_executor, """
+    You are provided with the following cucumber test cases content from a .feature file. Your task is to implement the step definitions for these test cases. Each step definition should be tested and verified to ensure it correctly performs the actions described in the feature file. Use appropriate browser automation techniques to interact with web elements, input data, and validate outcomes as specified in the scenarios.
         
-        Login using username 'standard_user' and password 'secret_sauce'.
-        
-        Add the 'Sauce Labs Bike Light' to the cart.
-        
-        Go to the cart and checkout.
-        
-        Enter shipping info with first name 'John', last name 'Doe', and postal code '12345'.
-        
-        Click continue and finish the order.
-        
-        Click on 'Back Home' to return to the homepage.
-        
-        click on the menu
-        
-        Click on 'Logout' to log out of the application.
+        Here is the content of the .feature file:
 
-        Finally, take a screenshot of the homepage and save it as 'final_homepage.png'.
+        URL: https://parabank.parasoft.com/parabank/index.htm
+        Feature: Authentication and navigation
+
+        Background:
+            Given I am on the Parabank home page
+
+        Scenario: Successful login with valid credentials
+            When I login with username "prajus" and password "123456789"
+            Then I should see the accounts overview
+
+        Scenario: Login fails with incorrect password
+            When I login with username "prajus" and password "wrongpass"
+            Then I should see a login error message
+
+        Scenario: Login fails with empty credentials
+            When I login with username "" and password ""
+            Then I should see a validation or error message
+
+        Scenario: Navigate to Register page from home
+            When I follow the Register link
+            Then I should be on the registration page
+
+            
+        1. Start by navigating to the URL provided.
+        2. For each scenario, perform the following steps:
+            a. Perform the action specified in the "action" field (e.g., click, input_text).
+            b. Log the result of each scenario, indicating whether it passed or failed based on the verification step.
+        3. After all scenarios have been executed, provide a summary of the results, including the total number of scenarios, how many passed, and how many failed.
+
         """)
         print("\nResult:", result.get("output", result))
     except Exception as e:

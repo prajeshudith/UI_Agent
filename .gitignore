@@ -1,2 +1,3 @@
 venv
 .env
+cucumber_tests/node_modules
