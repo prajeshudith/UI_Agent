@@ -61,3 +61,9 @@ if __name__ == "__main__":
     # Save logs to a file
     with open("agent_thoughts.log", "w", encoding="utf-8") as f:
         f.write("\n".join(logs))
+    
+    # Run Critic Agent
+    rsp = input("Do you want to run the Critic agent to evaluate the test cases created? (y/n): ")
+    if rsp.lower() == 'y':
+        from src.agent.critic_agent import main as run_critic_agent
+        asyncio.run(run_critic_agent())
