@@ -1,3 +1,4 @@
+from datetime import datetime
 from dotenv import load_dotenv
 load_dotenv()
 import os
@@ -10,6 +11,7 @@ from src.tools.playwright_tools import create_langchain_tool
 from langchain.agents import AgentExecutor
 from src.tools.editor_tools import get_writer_tool
 from src.tools.get_user_story_tool import create_work_items_tool
+from langchain_community.callbacks import get_openai_callback
 
 # Global MCP client instance
 mcp_client = PlaywrightMCPClient()
@@ -64,9 +66,24 @@ async def test_agent(testing_prompt):
     )
 
     try:
-        result = await agent_executor.ainvoke({"input": testing_prompt})
-        print("\nResult:", result.get("output", result))
-        return result
+        cost_details = ""
+        with get_openai_callback() as cb:
+            result = await agent_executor.ainvoke({"input": testing_prompt})
+            cost_details += f"""
+            {"-"*20}
+            Agent execution time: {datetime.now().isoformat()}
+            Total Tokens: {cb.total_tokens}
+            Prompt Tokens: {cb.prompt_tokens}
+            Completion Tokens: {cb.completion_tokens}
+            Total Cost (USD): ${cb.total_cost}
+            {"-"*20}
+            """
+            with open("cost_details.txt", "a", encoding="utf-8") as f:
+                f.write(cost_details)
+            print("\nResult:", result.get("output", result))
+            print("\nCost Details:")
+            print(cost_details)
+            return result
     except Exception as e:
         print(f"Error: {e}")
         import traceback
