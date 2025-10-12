@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Authentication Test Results</title>
+</head>
+<body>
+    <h1>Authentication Test Results</h1>
+    <table border="1">
+        <tr>
+            <th>Scenario</th>
+            <th>Status</th>
+            <th>Explanation</th>
+        </tr>
+        <tr>
+            <td>Successful login with valid credentials</td>
+            <td>Failed</td>
+            <td>Expected to see account management page, but received an error page.</td>
+        </tr>
+        <tr>
+            <td>Failed login with invalid credentials</td>
+            <td>Passed</td>
+            <td>Displayed error message for invalid credentials.</td>
+        </tr>
+        <tr>
+            <td>Failed login with empty credentials</td>
+            <td>Passed</td>
+            <td>Displayed error message for empty username and password.</td>
+        </tr>
+    </table>
+    <h2>Total Scenarios: 3</h2>
+    <h2>Passed: 2</h2>
+    <h2>Failed: 1</h2>
+</body>
+</html>
