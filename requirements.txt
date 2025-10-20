@@ -15,3 +15,4 @@ mcp
 openai
 langchain-openai
 azure-devops
+mcp_registry
