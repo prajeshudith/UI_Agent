@@ -19,9 +19,11 @@ with open("prerequsites/credentials.json", "r", encoding="utf-8") as f:
 # )
 
 task_id = "3"
+parent_folder="parabank_tests"
 testcases_prompt = testcases_prompt.format(
     task_id=task_id,
     credentials=credentials,
+    parent_folder=parent_folder
 )
 
 logs = []
@@ -31,6 +33,8 @@ if __name__ == "__main__":
     rsp = input("Do you want to run the agent to generate test cases from the user story? (y/n): ")
     logs.append("Running agent to generate test cases from the user story")
     if rsp.lower() == 'y':
+        logs.append("Running Testcase Generation Agent")
+        print("Running Testcase Generation Agent...")   
         response = asyncio.run(test_agent(testcases_prompt))
         for action, observation in response["intermediate_steps"]:
             logs.append(f"Thought: {action.log.split('Action:')[0].strip()}") # Extract thought from the log
@@ -43,7 +47,10 @@ if __name__ == "__main__":
     logs.append("Running agent on the feature files created")
     rsp = input("Do you want to run the agent on the feature files created? (y/n): ")
     if rsp.lower() == 'y':
-        folder_path = input("Enter the folder path where the feature files are located (e.g., features/): ").strip()
+        # folder_path = input("Enter the folder path where the feature files are located (e.g., features/): ").strip()
+        folder_path = f"{parent_folder}/features/"
+        logs.append(f"Running Testing Agent on feature files in folder: {folder_path}")
+        print("Running Testing Agent on feature files...")
         features = load_feature_files(folder_path)
         for feature in features:
             from prompt.prompts import testing_prompt
@@ -65,5 +72,7 @@ if __name__ == "__main__":
     # Run Critic Agent
     rsp = input("Do you want to run the Critic agent to evaluate the test cases created? (y/n): ")
     if rsp.lower() == 'y':
+        logs.append("Running Critic Agent to evaluate the test cases created")
+        print("Running Critic Agent to evaluate the test cases created...")
         from src.agent.critic_agent import main as run_critic_agent
         asyncio.run(run_critic_agent())

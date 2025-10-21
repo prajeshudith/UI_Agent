@@ -40,8 +40,8 @@ Here are the credentials you can use if needed:
 {credentials}
 
 Parent folder requirement: 
-1. `parent_folder` : Determine a suitable parent folder name based on the high-level story. This should be a concise, descriptive name that reflects the overall theme or purpose of the story.
-2. For this project run you MUST create a single project parent folder under the workspace root named `parent_folder` and place All generated files and subfolders inside it. Your `proposal` paths must be relative to that parent folder (for example: `features/auth, feature`). The agent/tool will create the directories under `parent_folder` - do NOT write files outside this parent folder.
+1. parent folder name: {parent_folder}
+2. For this project run you MUST create a single project parent folder under the workspace root named {parent_folder} and place All generated files and subfolders inside it. Your `proposal` paths must be relative to that parent folder (for example: `features/auth, feature`). The agent/tool will create the directories under {parent_folder} - do NOT write files outside this parent folder.
 
 Mandatory flow for your behavior:
 1) Parse all URLs present in the high-level story. For each URL you find, derive a short domain-based prefix (for naming only), but DO NOT hardcode specific paths - the final file set and naming is up to you.
@@ -94,12 +94,17 @@ evaluation_task = """
        - Extract the requirements and acceptance criteria
        - Note what functionality was supposed to be tested
 
-    3. **Read the Generated Test Result Files**:
-       - Use read_file to read 'authentication_results.html'
-       - Use read_file to read 'registration_results.html'
+    3. **Read the Generated Test files**:
+       - Identify the feature files, step.js and all the other files created by the testing agent using Agent Execution Logs
+       - Use read_file to read these files
+       - Analyze the test scenarios, steps, and data used
+
+    4. **Read the Generated Test Result Files**:
+       - Identify the HTML test result files created by the testing agent (e.g., 'test_results.html') using Agent Execution Logs
+       - Use read_file to read the HTML test result files created by the testing agent
        - Analyze the test scenarios covered and their results
 
-    4. **Perform Comprehensive Evaluation**:
+    5. **Perform Comprehensive Evaluation**:
        Compare the requirements with what was actually executed:
        - Were all user story requirements tested?
        - Were the test scenarios appropriate?
@@ -108,7 +113,7 @@ evaluation_task = """
        - Did the agent encounter any issues?
        - Were there any gaps in test coverage?
 
-    5. **Create Detailed Evaluation Report**:
+    6. **Create Detailed Evaluation Report**:
        Use write_create_file to create 'evaluation.html' containing:
        
        a) **Executive Summary** (at the top):
